@@ -12,8 +12,6 @@ IP_API_URL = "https://ipapi.co/{}/json/"
 PUBLIC_IP_API_URL = "https://www.ipchicken.com/"
 
 """Gets the machine's local IP Address"""
-
-
 def get_local_ip_address() -> str:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
@@ -21,8 +19,6 @@ def get_local_ip_address() -> str:
 
 
 """Gets the ip address information on the given public IP Address"""
-
-
 def get_ip_adress_info(address="0.0.0.0") -> Dict:
     res = get(IP_API_URL.format(address))
     if res.text == None:
@@ -32,8 +28,6 @@ def get_ip_adress_info(address="0.0.0.0") -> Dict:
 
 
 """Gets the machine's public IP address"""
-
-
 def get_public_ip_address() -> str:
     res = get(PUBLIC_IP_API_URL)
     try:
@@ -52,11 +46,9 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     if len(args) == 0:
         data = get_ip_adress_info(get_public_ip_address())
-        # print(json.dumps(data, indent=4, sort_keys=True))
         print_formatted("IP Address Information", data)
     else:
         address = args[0]
         data = get_ip_adress_info(address)
-        # print(json.dumps(data, indent=4, sort_keys=True))
         print_formatted("IP Address Information", data)
 
