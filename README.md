@@ -13,4 +13,11 @@ pip install -r requirements.txt
 ```
 python main.py <public-ip-address>
 ```
-### Note: **If no IP Address is specified, makes use of the device's public IP Address**
+#### Note: **If no IP Address is specified, makes use of the device's public IP Address**
+
+## **Using Executable File**
+Assuming the ./bin directory is added to your PATH environment variable or you are in the ./bin directory:
+```
+  ipaddrinfo <public-ip-address>
+```
+#### Note: **If no IP Address is specified, makes use of the device's public IP Address**
