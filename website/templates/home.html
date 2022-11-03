@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}IP Info{% endblock %}
+
+{% block content %}
+<br/>
+<h1 align="center">IP Address Information</h1>
+
+<br/>
+<div class="ipForms">
+
+    <div class="customIP">
+        <form method="POST">
+            <div class="form-group">
+                <input
+                    type="text" 
+                    class="form-control" 
+                    id="customIPAddress" 
+                    name="customIPAddress" 
+                    placeholder="Enter an IPv4 Adress"
+                />
+            </div>
+            <div align="right">
+                <button type="submit" class="btn btn-primary">Enter</button>
+            </div>
+        </form>
+    </div>
+    <div style="width: 2%;"> </div>
+    <div class="deviceIP">
+        <form method="POST">
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Get IPv4 Address Information of this Device</button>
+            </div>
+        </form>
+    </div>
+</div>
+<br/>
+<div class="savedIPAddress">
+<h3>Saved IP Addresses</h3>
+<ul class="list-group list-group-flush" id="notes">
+    {% for ip in ipInfos %}
+        <div class="ipForms" style="border-bottom: 1px solid rgb(163, 163, 163);">
+            <div style="width: 60%;">
+                <li class="list-group-item" style="background-color: rgb(202, 202, 202);">
+                <strong>{{ ip.labelname }} : </strong> {{ ip.ip }}
+            </div>
+
+            <div style="width: 30%;" align="right">
+                <form method="POST" style="width: 110px;">
+                    <input
+                        type="hidden" 
+                        class="form-control" 
+                        id="customIPAddress" 
+                        name="customIPAddress" 
+                        value="{{ ip.ip }}"
+                    />
+                    <button type="submit" class="btn btn-primary">View IP Info</button>
+                </form>
+            </div>
+            {% if user.id < 3 %}
+            <div class="deleteIP" style="width: 10%;">
+                <button type="button" class="close" onClick="deleteIP('{{ ip.ip }}')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </li>
+            </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
