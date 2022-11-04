@@ -1,6 +1,5 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.sql import func
 
 
 class User(db.Model, UserMixin):
@@ -8,3 +7,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     firstName = db.Column(db.String(150))
+
+
+class Ipinfo(db.Model):
+    ip = db.Column(db.String(1000), primary_key=True)
+    labelname = db.Column(db.String(1000))
