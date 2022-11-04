@@ -1,0 +1,51 @@
+
+.customIP{
+    background-color: rgb(202, 202, 202);
+    padding: 20px;
+    width: 49%;
+}
+
+.deviceIP{
+    background-color: rgb(131, 131, 131);
+    padding: 20px 20px 20px 20px;
+    width: 49%;
+}
+
+.ipForms{
+    display: flex;
+    padding: 10px;
+}
+
+.btn-primary{
+    background-color: rgb(39, 36, 75);
+    border-color: black;
+}
+
+.list-group-item{
+    width: auto;
+}
+
+.ipFormsButtons{
+    padding-bottom: 40px;
+    display: flex;
+}
+
+.savedIPAddress{
+    background-color: rgb(202, 202, 202);
+    padding: 20px;
+    margin-bottom: 100px;
+}
+
+.deleteIP{
+    position: relative;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accounts{
+    padding: 20px;
+    display: flex;
+}
