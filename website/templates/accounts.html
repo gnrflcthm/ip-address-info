@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Accounts{% endblock %}
+
+{% block content %}
+<br/>
+<h1 align="center">Accounts</h1>
+    <ul class="list-group list-group-flush" id="notes">
+            {% for fetchUser in users %}
+                {% if fetchUser.id != user.id %}
+                <div class="accounts" style="border-bottom: 1px solid rgb(163, 163, 163);">
+                    <div style="width: 60%;">
+                        <li class="list-group-item">
+                            {{ fetchUser.email }}
+                    </div>
+
+                    <div style="width: 30%;">
+                        <form method="POST" align="right">
+                            <input
+                                type="hidden" 
+                                class="form-control" 
+                                id="changePasswordFor" 
+                                name="changePasswordFor" 
+                                value="{{ fetchUser.id }}"
+                            />
+                            <button type="submit" class="btn btn-link">Change Password</button>
+                        </form>
+                    </div>
+
+                    <div style="width: 10%;">
+                        <button type="button" class="close" onClick="deleteAcc({{ fetchUser.id }})">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </li>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+    </ul>
+{% endblock %}
+

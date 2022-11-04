@@ -59,3 +59,14 @@ def ip_info(address=None) -> Dict:
                 return redirect(url_for('views.ip_info'))
 
     return render_template("ipInfo.html", user=current_user, ipInfo=ipInfo)
+
+
+@ views.route('/delete-ip', methods=['POST'])
+def delete_ip():
+    ip = json.loads(request.data)
+    ipAddress = ip['ipAddress']
+    ip = Ipinfo.query.get(ipAddress)
+    if ip:
+        db.session.delete(ip)
+        db.session.commit()
+    return jsonify({})
