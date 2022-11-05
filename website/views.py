@@ -83,3 +83,14 @@ def accounts():
 
     users = User.query.all()
     return render_template("accounts.html", user=current_user, users=users)
+
+
+@ views.route('/delete-acc', methods=['POST'])
+def delete_acc():
+    acc = json.loads(request.data)
+    accID = acc['accID']
+    acc = User.query.get(accID)
+    if acc:
+        db.session.delete(acc)
+        db.session.commit()
+    return jsonify({})
