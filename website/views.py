@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, request, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Ipinfo
+from .models import Ipinfo, User
 from . import db
 import json
 
@@ -70,3 +70,16 @@ def delete_ip():
         db.session.delete(ip)
         db.session.commit()
     return jsonify({})
+
+
+@ views.route('/accounts', methods=['GET', 'POST'])
+@ login_required
+def accounts():
+    if current_user.id > 3:
+        return redirect(url_for('views.home'))
+    if request.method == 'POST':
+        session['changePasswordFor'] = request.form.get('changePasswordFor')
+        return redirect(url_for('auth.changePasswordFor'))
+
+    users = User.query.all()
+    return render_template("accounts.html", user=current_user, users=users)
