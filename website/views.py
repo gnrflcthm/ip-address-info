@@ -14,20 +14,24 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    # Processes the IP Address input form
     if request.method == 'POST':
         if request.form.get('customIPAddress') != "":
+            # Stores the IP Address input in session so it could be accessed by the IP Info page
             session['customIPAddress'] = request.form.get('customIPAddress')
             return redirect(url_for('views.ip_info'))
         else:
             flash('Please input a valid public IP address.', category='error')
             pass
+    # Gets the saved IP Addresses from the database
     ipInfos = Ipinfo.query.all()
     return render_template("home.html", user=current_user, ipInfos=ipInfos)
 
 
 @ views.route('/ip-info', methods=['GET', 'POST'])
 @ login_required
-def ip_info(address=None) -> Dict:
+def ip_info():
+    # Segment for getting the IP Info using the ipapi API
     IP_API_URL = "https://ipapi.co"
     address = session.get('customIPAddress', None)
     res = get(
@@ -37,6 +41,7 @@ def ip_info(address=None) -> Dict:
     ipInfo = json.loads(res.text)
     ipInfo['languages'] = ipInfo['languages'].replace(",", ", ").upper()
 
+    # Processes the form for Saving IP Address
     if request.method == 'POST':
         ip = ipInfo['ip']
         labelname = request.form.get('labelName')

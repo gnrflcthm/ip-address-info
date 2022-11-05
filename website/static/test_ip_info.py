@@ -15,6 +15,8 @@ def ip_info(address=None) -> Dict:
 
 def test_ip_info():
     ipInfo = ip_info('8.8.8.8')
+
     for key, val in ipInfo.items():
         assert key != None
+        assert type(key) == str
         assert val != None
