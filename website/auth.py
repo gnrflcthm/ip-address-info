@@ -88,3 +88,54 @@ def sign_up():
             flash('Account successfully created.', category='success')
             return redirect(url_for('auth.sign_up'))
     return render_template("sign_up.html", user=current_user)
+
+
+@auth.route('/changePassword', methods=['GET', 'POST'])
+@login_required
+def changePassword():
+    # Processes the Change Password form
+    if request.method == 'POST':
+        currentPassword = request.form.get('currentPassword')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        # Validates the current user's password
+        if check_password_hash(current_user.password, currentPassword):
+            if password1 == password2:
+                current_user.password = generate_password_hash(
+                    password1, method='sha256')
+                db.session.commit()
+                successMessage = "Password successfully changed for " + current_user.email
+                flash(successMessage, category='success')
+            else:
+                flash('New password entered does not match.', category='error')
+        else:
+            flash('Wrong password entered.', category='error')
+    return render_template("changePassword.html", user=current_user, changePasswordFor=current_user)
+
+
+@auth.route('/changePasswordFor', methods=['GET', 'POST'])
+@login_required
+def changePasswordFor():
+    # Gets the account id passed from the accounts page
+    changePasswordFor = User.query.get(session.get('changePasswordFor', None))
+
+    # Processes the change password form
+    if request.method == 'POST':
+        currentPassword = request.form.get('currentPassword')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        # Validates the input
+        if check_password_hash(current_user.password, currentPassword):
+            if password1 == password2:
+                changePasswordFor.password = generate_password_hash(
+                    password1, method='sha256')
+                db.session.commit()
+                successMessage = "Password successfully changed for " + changePasswordFor.email
+                flash(successMessage, category='success')
+            else:
+                flash('New password entered does not match.', category='error')
+        else:
+            flash('Wrong password entered.', category='error')
+    return render_template("changePassword.html", user=current_user, changePasswordFor=changePasswordFor)
